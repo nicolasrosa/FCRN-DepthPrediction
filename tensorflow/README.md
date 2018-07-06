@@ -5,7 +5,7 @@ Run Single Prediction:
 
 Train on XPS:
     
-    python3 predict_nick.py -m train --machine xps --gpu 0 -s kitticontinuous_residential --max_steps 1000 -d 0.5 --ldecay --l2norm -t -v
+    python3 predict_nick.py -m train --machine nicolas --gpu 0 -s kitticontinuous_residential --max_steps 1000 -d 0.5 --ldecay --l2norm -t -v
     
 Train on Olorin:
     
