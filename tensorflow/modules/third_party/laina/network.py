@@ -166,6 +166,8 @@ class Network(object):
 
         # Convolution for a given input and kernel
         def convolve(i, k):
+            # print(tf.nn.conv2d(i, k, [1, s_h, s_w, 1], padding='VALID'))
+            # input("conv")
             return tf.nn.conv2d(i, k, [1, s_h, s_w, 1], padding='VALID')
 
         with tf.variable_scope(name) as scope:
