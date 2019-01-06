@@ -11,6 +11,7 @@ from modules.datasets.kitti_depth import KittiDepth
 from modules.datasets.kitti_discrete import KittiDiscrete
 from modules.datasets.nyudepth import NyuDepth
 from modules.datasets.lrmjose import LRMJose
+from modules.datasets.idrid_xande import idridXande
 
 
 # ==================
@@ -38,6 +39,8 @@ class Dataloader:
 
         if args.machine == 'nicolas':
             if args.dataset == 'lrmjose':
+                dataset_root = "/home/nicolas/Downloads/" #TODO: Mudar de Folder
+            elif args.dataset == 'idrid_xande':
                 dataset_root = "/home/nicolas/Downloads/" #TODO: Mudar de Folder
             else:
                 dataset_root = "/media/nicolas/nicolas_seagate/datasets/"
@@ -70,7 +73,9 @@ class Dataloader:
         elif args.dataset == 'lrmjose':
             dataset_path = dataset_root + "lrmjose/"
             self.dataset = LRMJose(dataset_path=dataset_path, name=args.dataset, height=256, width=455, max_depth=None)
-
+        elif args.dataset == 'idrid_xande':
+            dataset_path = dataset_root + "idrid_xande/"
+            self.dataset = idridXande(dataset_path=dataset_path, name=args.dataset, height=256, width=455, max_depth=None)
         else:
             print("[Dataloader] The typed dataset '%s' is invalid. "
                   "Check the list of supported datasets." % args.dataset)
@@ -163,6 +168,8 @@ class Dataloader:
             tf_depth = (tf.cast(tf_depth, tf.float32)) / 1000.0
         elif dataset_name == 'lrmjose':
             tf_depth = (tf.cast(tf_depth, tf.float32)) / 1.0 # TODO: Correto?
+        elif dataset_name == 'idrid_xande':
+            tf_depth = (tf.cast(tf_depth, tf.float32)) / 1.0 # TODO: Correto?
         return tf_depth
 
     @staticmethod
@@ -193,7 +200,8 @@ class Dataloader:
 
         if '_'.join(dataset_name.split('_')[:2]) == 'kitti_discrete' or \
            '_'.join(dataset_name.split('_')[:2]) == 'kitti_continuous' or \
-           dataset_name == 'lrmjose':
+           dataset_name == 'lrmjose' or \
+           dataset_name == 'idrid_xande':
             tf_depth = tf.image.decode_png(tf_depth_file, channels=1, dtype=tf.uint8)
         else:
             tf_depth = tf.image.decode_png(tf_depth_file, channels=1, dtype=tf.uint16)
