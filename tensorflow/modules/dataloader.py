@@ -12,7 +12,7 @@ from modules.datasets.kitti_depth import KittiDepth
 from modules.datasets.kitti_discrete import KittiDiscrete
 from modules.datasets.lrmjose import LRMJose
 from modules.datasets.nyudepth import NyuDepth
-from modules.datasets.idrid_xande import idridXande
+from modules.datasets.idrid import IDRiD
 
 
 # ==================
@@ -62,8 +62,8 @@ class Dataloader:
 
         elif args.dataset == 'lrmjose':
             self.dataset = LRMJose(dataset_rel_path="lrmjose/", name=args.dataset, height=256, width=455, max_depth=None)
-        elif args.dataset == 'idrid_xande':
-            self.dataset = idridXande(dataset_rel_path="idrid_xande/", name=args.dataset, height=256, width=455, max_depth=None)
+        elif args.dataset == 'idrid':
+            self.dataset = IDRiD(dataset_rel_path="idrid/", name=args.dataset, height=256, width=455, max_depth=None)
         else:
             raise SystemError("[Dataloader] The typed dataset '%s' is invalid. "
                               "Check the list of supported datasets." % args.dataset)
@@ -157,7 +157,7 @@ class Dataloader:
             tf_depth = (tf.cast(tf_depth, tf.float32)) / 1000.0
         elif dataset_name == 'lrmjose':
             tf_depth = (tf.cast(tf_depth, tf.float32)) / 1.0  # TODO: Correto?
-        elif dataset_name == 'idrid_xande':
+        elif dataset_name == 'idrid':
             tf_depth = (tf.cast(tf_depth, tf.float32)) / 1.0 # TODO: Correto?
         return tf_depth
 
@@ -190,7 +190,7 @@ class Dataloader:
         if '_'.join(dataset_name.split('_')[:2]) == 'kitti_discrete' or \
            '_'.join(dataset_name.split('_')[:2]) == 'kitti_continuous' or \
            dataset_name == 'lrmjose' or \
-           dataset_name == 'idrid_xande':
+           dataset_name == 'idrid':
             tf_depth = tf.image.decode_png(tf_depth_file, channels=1, dtype=tf.uint8)
         else:
             tf_depth = tf.image.decode_png(tf_depth_file, channels=1, dtype=tf.uint16)
