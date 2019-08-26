@@ -64,7 +64,6 @@ class Settings:
 # ===========
 #  Functions
 # ===========
-
 def detect_available_models():
     if args.model_path == '':
         found_models = glob.glob(settings.output_dir + "fcrn/*/*/*/*/restore/*.meta")
@@ -84,7 +83,6 @@ def detect_available_models():
 
 def imsave_as_uint16_png(filename, image_float32):
     """ Converts the predictions from float32 to uint16 and saves them as PNG images """
-
     image_uint16 = img_as_uint(exposure.rescale_intensity(image_float32, out_range='float'))
     imageio.imsave(filename, image_uint16)
 
@@ -140,4 +138,7 @@ def total_size(o, handlers=None, verbose=False):
 # ================== #
 #  Global Variables  #
 # ================== #
-settings = Settings('fcrn', 'output/', 'output/tmp/', 'log.txt')
+settings = Settings(app_name='fcrn',
+                    output_dir='output/',
+                    output_tmp_dir='output/tmp/',
+                    output_log_file='log.txt')

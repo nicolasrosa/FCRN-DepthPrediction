@@ -17,7 +17,6 @@ from skimage import exposure, img_as_uint
 from modules import metrics
 from modules.args import args
 from modules.utils import settings
-import cv2
 
 # =========================
 #  [Test] Framework Config
@@ -54,6 +53,7 @@ def read_text_file(filename, dataset_path='/media/nicolas/nicolas_seagate/datase
 
     return depth_continuous_filenames, depth_semidense_filenames
 
+
 def read_depth_image(filename, div=1.0):
     return imageio.imread(filename).astype('float32') / div
 
@@ -85,7 +85,7 @@ def evaluate_densification():
 
         # Fix Data shift caused by close operation
         artefacts = close_depth - kitti_depth_depth
-        real_proof = kitti_depth_depth+artefacts
+        real_proof = kitti_depth_depth + artefacts
         real_proof2 = (close_depth - real_proof)
         print(real_proof2)
 
@@ -121,8 +121,7 @@ def evaluate_densification():
         input_depths.append(close_depth)
         output_depths.append(kitti_depth_depth)
 
-        print('{}/{}'.format(i+1, num_test_images))
-
+        print('{}/{}'.format(i + 1, num_test_images))
 
     # Invokes Evaluation Tools
     if args.eval_tool == 'monodepth':

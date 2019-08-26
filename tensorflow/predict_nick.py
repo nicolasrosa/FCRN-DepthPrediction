@@ -13,7 +13,7 @@
 # [Dataset] TODO: Caso ela realmente estiver corrompida no .zip, enviar e-mail para Apolloscape
 # [Dataset] FIXME: Aparentemente existe uma série de imagens inválidas no dataset apolloscape. Use scripts/check_apolloscape_imgs.py
 
-# [Valid] FIXME: valid.loss sempre igual a zero quando utiliza-se a as flags 'valid' e 'eigen_grads'
+# [Valid] FIXME: valid.loss sempre igual a zero quando utiliza-se as flags 'valid' e 'eigen_grads'
 
 # [Test] FIXME: A Terceira imagem de Test, a depth_resized (~20m) não possui o mesmo range que a depth image (~70 m). Reproduce: python3 predict_nick.py -m test -s kitti_continuous --px all -r output/fcrn/kitti_continuous/all_px/eigen_grads/2018-06-27_11-14-21/restore/model.fcrn -u
 
@@ -30,7 +30,7 @@
 # Ideas
 # TODO: Trabalhar com Sequências Temporais: Semelhante à SfM, LSTM
 # TODO: Como Monocular Depth pode auxiliar em Visual Odometry?
-# TODO: O trabalho "Sparsity Invariant CNNs" diz que redes neurais devem ser capazes de distinguir pixeis observados e pixeis inválidos. Não simplesmente "mask them out".
+# TODO: O trabalho "Sparsity Invariant CNNs" diz que redes neurais devem ser capazes de distinguir pixels observados e pixels inválidos. Não simplesmente "mask them out".
 # TODO: O trabalho "Deep Ordinal Regression Network (DORN) for Monocular Depth Estimation" aponta o problema com as arquitetura clássicas de MDE que inicialmente foram desenvolvidas para Image Recognition, cujas operações de max-pooling e striding reduzem a resolução espacial dos features maps para este tipo de aplicação
 # TODO: Investigar Redes Neurais que estudam esparsidade DENTRO das redes e nas ENTRADAS. Ref: "Sparsity Invariant CNNs"
 # TODO: De acordo com DORN, abordar o problema de estimação como um problema multi-class classification é mais indicado do que tratá-lo como um problema de regressão

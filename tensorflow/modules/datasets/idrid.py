@@ -65,7 +65,6 @@ class IDRiD(Dataset):
             # for item in xande:
             #     print(item)
 
-
             # TODO: Add Comment
             image_filenames, depth_filenames, n2, m2 = self.search_pairs(image_filenames_tmp, depth_filenames_tmp,
                                                                          image_filenames_aux, depth_filenames_aux)
