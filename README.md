@@ -1,3 +1,11 @@
+# DISCLAIMER
+
+This repository was forked forked from [iro-cp/FCRN-DepthPrediction](https://github.com/iro-cp/FCRN-DepthPrediction). We developed all the code for the training step and did several modifications for allowing the code to handle different datasets like ApolloScape, KITTI, NYUDepth, among others, which features were not available on the original repository. However, we used and preserved the network proposed by Laina et al. (2016) presented in the "Deeper Depth Prediction with Fully Convolutional Residual Networks (FCRN)" article. All rights reserved to them.
+
+For more information check the LICENSE clauses.
+
+
+
 # FCRN Framework Description
 
 `--debug`, enables the Debug Mode. Default= `False`
@@ -8,6 +16,8 @@
 `--model_name`, selects the network topology. Default= `fcrn`
 
 `--gpu`, specifies the GPU id to run the code. Default= `0`
+
+
 
 ##  1. Training  #
 
@@ -48,6 +58,28 @@
 python3 predict_nick.py --machine nicolas -m train --gpu 0 -s kitti_continuous --px valid --loss berhu --max_steps 300000 -l 1e-4 -d 0.5 --ldecay --l2norm --data_aug --remove_sky -t -v
 ```
 
+
+
+### TensorBoard
+
+```shell
+tensorboard --logdir=MEGA/workspace/FCRN-DepthPrediction/tensorflow/output/fcrn/apolloscape
+```
+```shell
+tensorboard --logdir=MEGA/workspace/FCRN-DepthPrediction/tensorflow/output/fcrn/kitti_depth
+```
+```shell
+tensorboard --logdir=MEGA/workspace/FCRN-DepthPrediction/tensorflow/output/fcrn/kitti_discrete
+```
+```shell
+tensorboard --logdir=MEGA/workspace/FCRN-DepthPrediction/tensorflow/output/fcrn/kitti_continuous
+```
+```shell
+tensorboard --logdir=MEGA/workspace/FCRN-DepthPrediction/tensorflow/output/fcrn/nyudepth
+```
+
+
+
 ## 2. Testing/Evaluation
 
 **Arguments and flags descriptions:**
@@ -73,11 +105,15 @@ The `--test_split` flag allows you to choose which dataset you want to test on.
 
 `-u/--show_test_results`, shows the network predictions for the specified test split images. Default= `False`
 
+
+
 **Command line, when selecting a desired trained model:**
 
 ```shell
 python3 predict_nick.py --machine nicolas -m test --gpu 0 -s kitti_continuous -r output/fcrn/2018-02-26_17-08-45/restore/model.fcrn --eval_tool monodepth --test_split eigen_kitti_depth -u
 ```
+
+
 
 **Using official evaluation tool from KITTI Depth Prediction Dataset:**
 
@@ -85,11 +121,15 @@ python3 predict_nick.py --machine nicolas -m test --gpu 0 -s kitti_continuous -r
 python3 predict_nick.py -m test --gpu 0 -s kitti_continuous --eval_tool kitti_depth --test_split eigen_kitti_depth -u
 ```
 
+
+
 **Using Monodepth's evaluation code:**
 
 ```shell
 python3 predict_nick.py -m test --gpu 0 -s kitti_continuous --eval_tool monodepth --test_split eigen_kitti_depth -u
 ```
+
+
 
 ## 3. Predict (Single Image Prediction)
 
@@ -104,105 +144,64 @@ python3 predict_nick.py -m test --gpu 0 -s kitti_continuous --eval_tool monodept
 python3 predict_nick.py -m pred --gpu 0 -r ../models/NYU_FCRN-checkpoint/NYU_FCRN.ckpt -i ../misc/nyu_example.png 
 ```
 
-# TensorBoard
 
-```shell
-tensorboard --logdir=MEGA/workspace/FCRN-DepthPrediction/tensorflow/output/fcrn/apolloscape
-```
-```shell
-tensorboard --logdir=MEGA/workspace/FCRN-DepthPrediction/tensorflow/output/fcrn/kitti_depth
-```
-```shell
-tensorboard --logdir=MEGA/workspace/FCRN-DepthPrediction/tensorflow/output/fcrn/kitti_discrete
-```
-```shell
-tensorboard --logdir=MEGA/workspace/FCRN-DepthPrediction/tensorflow/output/fcrn/kitti_continuous
-```
-```shell
-tensorboard --logdir=MEGA/workspace/FCRN-DepthPrediction/tensorflow/output/fcrn/nyudepth
-```
 
-# Real-Time Prediction using OpenCV:
+## 4. Real-Time Prediction using OpenCV:
 
-**Run a specific model:**
+   **Run a specific model:**
 
-```shell
-python3 predict_cv.py -r ../models/NYU_FCRN-checkpoint/NYU_FCRN.ckpt -i ../misc/drone_indoor.mp4
-```
+   ```shell
+   python3 predict_cv.py -r ../models/NYU_FCRN-checkpoint/NYU_FCRN.ckpt -i ../misc/drone_indoor.mp4
+   ```
 
-```shell
-python3 predict_cv.py -r output/fcrn/kitti_continuous/all_px/berhu/2018-06-29_17-59-58/restore/model.fcrn ../misc/outdoor_dubai_city.mp4
-```
+   ```shell
+   python3 predict_cv.py -r output/fcrn/kitti_continuous/all_px/berhu/2018-06-29_17-59-58/restore/model.fcrn ../misc/outdoor_dubai_city.mp4
+   ```
 
-**Detects and lists the available models:**
+   
 
-```shell
-python3 predict_cv.py -i ../misc/indoor_drone.mp4 --gpu 0
-python3 predict_cv.py -i ../misc/outdoor_dubai_city.mp4 --gpu 0
-```
+   **Detects and lists the available models:**
 
-**Encode Video:**
+   ```shell
+   python3 predict_cv.py -i ../misc/indoor_drone.mp4 --gpu 0
+   python3 predict_cv.py -i ../misc/outdoor_dubai_city.mp4 --gpu 0
+   ```
 
-```shell
-ffmpeg -r 30 -f image2 -s 304x288 -i frame%06d.png -i pred%06d.png -vcodec libx264 -crf 25  -pix_fmt yuv420p ../test.mp4
-```
+   
 
-**Dependencies:**
+   **Encode Video:**
 
-1.1) Gstreamer:
+   ```shell
+   ffmpeg -r 30 -f image2 -s 304x288 -i frame%06d.png -i pred%06d.png -vcodec libx264 -crf 25  -pix_fmt yuv420p ../test.mp4
+   ```
 
-```shell
-sudo apt-get install libgstreamer1.0-0 gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-doc gstreamer1.0-tools
-```
+   
 
-1.2) ffmpeg:
+   **Dependencies:**
 
-```shell
-sudo apt install ffmpeg
-```
+   1.1) Gstreamer:
 
-1.3) Grant access to user for using video devices:
+   ```shell
+   sudo apt-get install libgstreamer1.0-0 gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-doc gstreamer1.0-tools
+   ```
 
-```shell
-grep video /etc/group
-sudo usermod -a -G video olorin
-sudo chmod 777 /dev/video0
-```
+   1.2) ffmpeg:
 
-# DeepLab's Four Alignment Rules:
-URL: https://github.com/tensorflow/tensorflow/issues/6720
+   ```shell
+   sudo apt install ffmpeg
+   ```
 
-1) Use of odd-sized kernels in all convolution and pooling ops.
-2) Use of SAME boundary conditions in all convolution and pooling ops.
-3) Use align_corners=True when upsampling feature maps with bilinear interpolation.
-4) Use of inputs with height/width equal to a multiple of the output_stride, plus one (for example, when the CNN output stride is 8, use height or width equal to 8 * n + 1, for some n, e.g., image HxW set to 321x513).
+   1.3) Grant access to user for using video devices:
 
-# Run Coverage for Codacy Support 
+   ```shell
+   grep video /etc/group
+   sudo usermod -a -G video olorin
+   sudo chmod 777 /dev/video0
+   ```
 
-https://support.codacy.com/hc/en-us/articles/207279819-Coverage
-https://support.codacy.com/hc/en-us/articles/207279819-Coverage
-https://support.codacy.com/hc/en-us/articles/207312879-Generate-Coverage
+  
 
-**Setup:**
 
-```shell
-pip install codacy-coverage
-export CODACY_PROJECT_TOKEN=%Project_Token%
-```
-
-**Updating Codacy:**
-
-```shell
-coverage run predict_nick.py -m train --machine nicolas -s kitti_discrete --px all --loss mse --max_steps 150000 --ldecay --l2norm --data_aug -t
-coverage xml
-python-codacy-coverage -r coverage.xml
-```
-
-**Use `coverage report` to report on the results:**
-
-```shell
-coverage report -m
-```
 
 # Third-Party Evaluation Code
 ## 1. KITTI Depth Prediction Dataset's Evaluation tool
@@ -234,6 +233,8 @@ sh make.sh
 wget -q -O /tmp/libpng12.deb http://mirrors.kernel.org/ubuntu/pool/main/libp/libpng/libpng12-0_1.2.54-1ubuntu1_amd64.deb   && sudo dpkg -i /tmp/libpng12.deb   && rm /tmp/libpng12.deb
 ```
 
+
+
 ## 2. Monodepth's Evaluation Code
 
 Monodepth Evaluation Code:
@@ -245,6 +246,8 @@ To evaluate run:
 python utils/evaluate_kitti.py --split kitti --predicted_disp_path ~/tmp/my_model/disparities.npy \
 --gt_path ~/data/KITTI/
 ```
+
+
 ## 3. A-jahani's Evaluation Code
 
 https://github.com/a-jahani/semodepth/blob/master/eval/eval_kitti.py
