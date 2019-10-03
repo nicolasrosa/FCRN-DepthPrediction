@@ -6,6 +6,17 @@ For more information check the LICENSE clauses.
 
 
 
+# System Requirements
+
+| Library    | Version |
+| ---------- | ------- |
+| Tensorflow | 1.10.0  |
+| CUDA       | 9.0     |
+
+The code was developed using Python 3.6.8/Ubuntu 18.04 and deployed on NVIDIA GeForce 1050Ti and Titan X GPUs.
+
+
+
 # FCRN Framework Description
 
 `--debug`, enables the Debug Mode. Default= `False`
