@@ -1,8 +1,37 @@
-# DISCLAIMER
+# Sparse-to-Continuous (FCRN)
 
-This repository was forked forked from [iro-cp/FCRN-DepthPrediction](https://github.com/iro-cp/FCRN-DepthPrediction). We developed all the code for the training step and did several modifications for allowing the code to handle different datasets like ApolloScape, KITTI, NYUDepth, among others, which features were not available on the original repository. However, we used and preserved the network proposed by Laina et al. (2016) presented in the "Deeper Depth Prediction with Fully Convolutional Residual Networks (FCRN)" article. All rights reserved to them.
+This is the reference Tensorflow implementation for training and testing depth estimation models using the method described in
 
-For more information check the LICENSE clauses.
+> [ICAR 2019 "Sparse-to-Continuous: Enhancing Monocular Depth Estimation using Occupancy Maps"](https://arxiv.org/abs/1809.09061)
+>
+> [Nícolas Rosa](https://dblp.org/pid/198/1985), [Vitor Guizilini](https://dblp.org/pid/81/7230), [Valdir Grassi Jr](https://dblp.org/pid/93/4528)
+
+**Citation**
+
+If you find our work useful in your research please consider citing our paper:
+
+```
+@article{rosa2018sparse,
+  title={Sparse-to-Continuous: Enhancing Monocular Depth Estimation using Occupancy Maps},
+  author={Rosa, N{\'\i}colas and Guizilini, Vitor and Grassi Jr, Valdir},
+  journal={arXiv preprint arXiv:1809.09061},
+  year={2018}
+}
+```
+
+
+
+**DISCLAIMER**
+
+This repository was originally forked from [iro-cp/FCRN-DepthPrediction](https://github.com/iro-cp/FCRN-DepthPrediction). We developed all the code in Tersonflow for the training step, alongside several modifications for allowing the code to handle different datasets like `ApolloScape`, `KITTI`, `NYUDepth`, and another features which were not available on the original repository. 
+
+We used and preserved the network proposed by Laina et al. (2016) presented in the "Deeper Depth Prediction with Fully Convolutional Residual Networks (FCRN)" article. **All rights reserved to them**.
+
+This code is for non-commercial use. For more information, please see the [license clauses](https://github.com/nianticlabs/monodepth2/blob/master/LICENSE).
+
+
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/FIJg-S9MjI4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
 
@@ -30,7 +59,7 @@ The code was developed using Python 3.6.8/Ubuntu 18.04 and deployed on NVIDIA Ge
 
 
 
-##  1. Training  #
+## 1. Training
 
 **Arguments and flags descriptions:**
 
@@ -76,15 +105,19 @@ python3 predict_nick.py --machine nicolas -m train --gpu 0 -s kitti_continuous -
 ```shell
 tensorboard --logdir=MEGA/workspace/FCRN-DepthPrediction/tensorflow/output/fcrn/apolloscape
 ```
+
 ```shell
 tensorboard --logdir=MEGA/workspace/FCRN-DepthPrediction/tensorflow/output/fcrn/kitti_depth
 ```
+
 ```shell
 tensorboard --logdir=MEGA/workspace/FCRN-DepthPrediction/tensorflow/output/fcrn/kitti_discrete
 ```
+
 ```shell
 tensorboard --logdir=MEGA/workspace/FCRN-DepthPrediction/tensorflow/output/fcrn/kitti_continuous
 ```
+
 ```shell
 tensorboard --logdir=MEGA/workspace/FCRN-DepthPrediction/tensorflow/output/fcrn/nyudepth
 ```
@@ -100,9 +133,10 @@ tensorboard --logdir=MEGA/workspace/FCRN-DepthPrediction/tensorflow/output/fcrn/
 `--test_split`, selects the desired test split for evaluation: `kitti_stereo`, `eigen`, or `eigen_kitti_depth`. Default= `''`
 
 The `--test_split` flag allows you to choose which dataset you want to test on.  
-* `kitti_stereo` corresponds to the 200 official training set pairs from [KITTI stereo 2015](http://www.cvlibs.net/datasets/kitti/eval_scene_flow.php?benchmark=stereo).  
-* `eigen` corresponds to the 697 test images used by [Eigen NIPS14](http://www.cs.nyu.edu/~deigen/depth/) and uses the raw LIDAR points.
-* `eigen_kitti_depth` corresponds to the 652 test images used by [Aleotti arXiv 2018](http://vision.deis.unibo.it/~ftosi/papers/monoGan.pdf) and uses ground truth semi-dense annotated depth images.
+
+- `kitti_stereo` corresponds to the 200 official training set pairs from [KITTI stereo 2015](http://www.cvlibs.net/datasets/kitti/eval_scene_flow.php?benchmark=stereo).  
+- `eigen` corresponds to the 697 test images used by [Eigen NIPS14](http://www.cs.nyu.edu/~deigen/depth/) and uses the raw LIDAR points.
+- `eigen_kitti_depth` corresponds to the 652 test images used by [Aleotti arXiv 2018](http://vision.deis.unibo.it/~ftosi/papers/monoGan.pdf) and uses ground truth semi-dense annotated depth images.
 
 `--test_file_path`, evaluates the model for the speficied images from a test_file`--debug', action='store_true', help="Enables the Debug Mode", default=False)
 .txt file. Default= `''`
@@ -161,30 +195,30 @@ python3 predict_nick.py -m pred --gpu 0 -r ../models/NYU_FCRN-checkpoint/NYU_FCR
 
    **Run a specific model:**
 
-   ```shell
+```shell
    python3 predict_cv.py -r ../models/NYU_FCRN-checkpoint/NYU_FCRN.ckpt -i ../misc/drone_indoor.mp4
-   ```
+```
 
-   ```shell
+```shell
    python3 predict_cv.py -r output/fcrn/kitti_continuous/all_px/berhu/2018-06-29_17-59-58/restore/model.fcrn ../misc/outdoor_dubai_city.mp4
-   ```
+```
 
    
 
    **Detects and lists the available models:**
 
-   ```shell
+```shell
    python3 predict_cv.py -i ../misc/indoor_drone.mp4 --gpu 0
    python3 predict_cv.py -i ../misc/outdoor_dubai_city.mp4 --gpu 0
-   ```
+```
 
    
 
    **Encode Video:**
 
-   ```shell
+```shell
    ffmpeg -r 30 -f image2 -s 304x288 -i frame%06d.png -i pred%06d.png -vcodec libx264 -crf 25  -pix_fmt yuv420p ../test.mp4
-   ```
+```
 
    
 
@@ -192,29 +226,30 @@ python3 predict_nick.py -m pred --gpu 0 -r ../models/NYU_FCRN-checkpoint/NYU_FCR
 
    1.1) Gstreamer:
 
-   ```shell
+```shell
    sudo apt-get install libgstreamer1.0-0 gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-doc gstreamer1.0-tools
-   ```
+```
 
    1.2) ffmpeg:
 
-   ```shell
+```shell
    sudo apt install ffmpeg
-   ```
+```
 
    1.3) Grant access to user for using video devices:
 
-   ```shell
+```shell
    grep video /etc/group
    sudo usermod -a -G video olorin
    sudo chmod 777 /dev/video0
-   ```
+```
 
   
 
 
 
 # Third-Party Evaluation Code
+
 ## 1. KITTI Depth Prediction Dataset's Evaluation tool
 
 **Dependencies:**
@@ -250,15 +285,29 @@ wget -q -O /tmp/libpng12.deb http://mirrors.kernel.org/ubuntu/pool/main/libp/lib
 
 Monodepth Evaluation Code:
 
-    https://github.com/mrharicot/monodepth/blob/master/utils/evaluate_kitti.py
+```
+https://github.com/mrharicot/monodepth/blob/master/utils/evaluate_kitti.py
+```
 
 To evaluate run:  
+
 ```shell
 python utils/evaluate_kitti.py --split kitti --predicted_disp_path ~/tmp/my_model/disparities.npy \
 --gt_path ~/data/KITTI/
 ```
 
-
 ## 3. A-jahani's Evaluation Code
 
 https://github.com/a-jahani/semodepth/blob/master/eval/eval_kitti.py
+
+
+
+
+
+# TODO
+
+- [ ] Upload code
+- [ ] Write README.md with framework descriptions
+- [ ] Change arXiv link to official link
+- [ ] Change bibtex for the official citation
+
