@@ -17,14 +17,11 @@ import modules.loss as loss
 # ===========
 def update_colorbar(cbar, img):
     vmin, vmax = np.min(img), np.max(img)
-    cbar.set_clim(vmin, vmax)
-
     cbar_ticks = np.linspace(vmin, vmax, num=7, endpoint=True)
+
+    cbar.set_clim(vmin, vmax)
     cbar.set_ticks(cbar_ticks)
-
     cbar.draw_all()
-
-    # Debug
     # print("vmin:", vmin, "\tvmax:", vmax)
 
 

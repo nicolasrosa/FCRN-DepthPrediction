@@ -268,21 +268,13 @@ def evaluation_tool_monodepth(pred_depths, gt_depths):
     print('[Metrics] Computing metrics...')
     for i in tqdm(range(num_test_images)):
         try:
-            if args.test_split == 'eigen_continuous':  # FIXME: Remove everything related to eigen_continuous
-                gt_depth = gt_depths_continuous[i]
-
-                if i in invalid_idx:
-                    print("invalid")
-                    continue  # Skips the rest of the code
-            else:
-                gt_depth = gt_depths[i]
-
+            gt_depth = gt_depths[i]
             pred_depth = pred_depths[i]
 
             pred_depth[pred_depth < args.min_depth] = args.min_depth
             pred_depth[pred_depth > args.max_depth] = args.max_depth
 
-            if args.test_split == 'eigen' or args.test_split == 'eigen_continuous':
+            if args.test_split == 'eigen':
                 mask = np.logical_and(gt_depth > args.min_depth, gt_depth < args.max_depth)
 
                 if args.garg_crop or args.eigen_crop:
@@ -302,7 +294,9 @@ def evaluation_tool_monodepth(pred_depths, gt_depths):
                     crop_mask[crop[0]:crop[1], crop[2]:crop[3]] = 1
                     mask = np.logical_and(mask, crop_mask)
 
-            mask = gt_depth > 0.0
+            # TODO: Linhas abaixo sobreescrevem as ações dos ifs acima.
+            mask = np.logical_and(gt_depth > args.min_depth, gt_depth < args.max_depth)
+            # mask = gt_depth > 0.0
 
             abs_rel[i], sq_rel[i], rms[i], log_rms[i], a1[i], a2[i], a3[i] = compute_errors(gt_depth[mask],
                                                                                             pred_depth[mask])
