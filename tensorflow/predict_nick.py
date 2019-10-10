@@ -123,10 +123,10 @@ def train():
                              exit_save_path='output/tf-saves/lastest.ckpt',
                              graph=graph,
                              config=config) as sess:
-        print("\n[Network/Training] Initializing graph's variables...")
+        print("\n[Train] Initializing graph's variables...")
 
         if args.retrain:
-            print('\n[network/Training] Loading the model to retrain it...')
+            print('\n[Train] Loading the model to retrain it...')
             load_model(saver=model.train_saver, sess=sess)
         else:
             init_op = tf.group(tf.global_variables_initializer(), tf.local_variables_initializer())
@@ -135,7 +135,7 @@ def train():
         # ===============
         #  Training Loop
         # ===============
-        print("[Network/Training] Training Initialized!\n")
+        print("[Train] Training Initialized!\n")
         coord = tf.train.Coordinator()
         threads = tf.train.start_queue_runners(coord=coord)
 
@@ -217,7 +217,7 @@ def train():
             # if (np.floor((step * args.batch_size) / data.numTrainSamples) != epoch) and not TRAIN_ON_SINGLE_IMAGE:
             if step % 1000 == 0 and not TRAIN_ON_SINGLE_IMAGE:
                 valid_loss_sum = 0
-                print("\n[Network/Validation] Epoch finished. Starting TestData evaluation...")
+                print("\n[Validation] Epoch finished. Starting TestData evaluation...")
                 for i in range(data.num_test_samples):
                     timer3 = -time.time()
                     feed_valid = {model.valid.tf_image_key: data.test_image_filenames[i],
@@ -269,7 +269,7 @@ def train():
 
         timer += time.time()
 
-        print("\n[Network/Training] Training FINISHED! Time elapsed: %f s\n" % timer)
+        print("\n[Train] Training FINISHED! Time elapsed: %f s\n" % timer)
 
         # ==============
         #  Save Results
@@ -302,7 +302,7 @@ def test():
     model = Test(data)
 
     with tf.Session() as sess:
-        print('\n[network/Testing] Loading the model...')
+        print('\n[Test] Loading the model...')
         load_model(saver=tf.train.Saver(), sess=sess)
 
         # ==============
@@ -317,7 +317,7 @@ def test():
         if args.show_test_results:
             test_plot_obj = Plot(args.mode, title='Test Predictions')
 
-        print("\n[Network/Testing] Generating Predictions...")
+        print("\n[Test] Generating Predictions...")
         timer = -time.time()
         for i in tqdm(range(num_test_images)):
             timer2 = -time.time()
@@ -377,33 +377,32 @@ def test():
 
         # Testing Finished.
         timer += time.time()
-        print("[Network/Testing] Testing FINISHED! Time elapsed: {} s\n".format(timer))
+        print("[Test] Testing FINISHED! Time elapsed: {} s\n".format(timer))
 
         # =========
         #  Results
         # =========
         # Calculates Metrics
-        if data.test_depth_filenames:
-            print("[Network/Testing] Calculating Metrics based on Test Predictions...")
+        if args.eval_tool:
+            if data.test_depth_filenames:
+                print("[Test] Calculating Metrics based on Test Predictions...")
 
-            print('args.test_split:', args.test_split)
-            print('args.test_file_path:', args.test_file_path)
-            print('dataset_path:', data.dataset.dataset_path)
-            print()
+                print('args.test_split:', args.test_split)
+                print('args.test_file_path:', args.test_file_path)
+                print('dataset_path:', data.dataset.dataset_path)
+                print()
 
-            # Invokes Evaluation Tools
-            if args.eval_tool == 'monodepth':
-                pred_depths, gt_depths = metrics.generate_depth_maps(pred_list, gt_list, data.dataset.dataset_path)
-                metrics.evaluation_tool_monodepth(pred_depths, gt_depths)
-            elif args.eval_tool == 'kitti_depth':
-                metrics.evaluation_tool_kitti_depth(num_test_images)
+                # Invokes Evaluation Tools
+                if args.eval_tool == 'monodepth':
+                    pred_depths, gt_depths = metrics.generate_depth_maps(pred_list, gt_list, data.dataset.dataset_path)
+                    metrics.evaluation_tool_monodepth(pred_depths, gt_depths)
+                elif args.eval_tool == 'kitti_depth':
+                    metrics.evaluation_tool_kitti_depth(num_test_images)
             else:
-                raise SystemError(
-                    "Invalid 'eval_tool' selected. Choose one of the options: 'monodepth' or 'kitti_depth'.")
-
+                print(
+                    "[Test] It's not possible to calculate metrics. There are no corresponding labels for generated predictions!")
         else:
-            print(
-                "[Network/Testing] It's not possible to calculate metrics. There are no corresponding labels for generated predictions!")
+            print("[Test] Metrics calculation was not requested!")
 
 
 # ========= #
@@ -456,7 +455,7 @@ def predict():
         # --------- #
         #  Restore  #
         # --------- #
-        print('\n[network/Predicting] Loading the model...')
+        print('\n[Predict] Loading the model...')
         load_model(saver=tf.train.Saver(), sess=sess)
 
         # ----- #

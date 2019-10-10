@@ -71,7 +71,7 @@ class Test:
             self.depth_op = [self.tf_depth_key, tf_depth, tf_depth_resized]
             self.pred_op = [tf_pred, tf_pred_up]
 
-            print("\n[Network/Test] Testing Tensors created.")
+            print("\n[Test] Testing tensors created.")
             print("\nTensors:")
             print(self.tf_image_key)
             print(self.tf_depth_key)

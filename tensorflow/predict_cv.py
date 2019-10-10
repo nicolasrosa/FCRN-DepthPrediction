@@ -259,7 +259,7 @@ def main():
         # --------- #
         #  Restore  #
         # --------- #
-        print('\n[network/Predicting] Loading the model...')
+        print('\n[Predict] Loading the model...')
         load_model(saver=tf.train.Saver(), sess=sess)
 
         # Use to load from npy file

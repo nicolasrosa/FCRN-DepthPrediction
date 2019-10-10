@@ -71,7 +71,7 @@ class Model(object):
         self.count_params()
 
     def build_model(self, data):
-        print("\n[Network/Model] Build Network Model...")
+        print("\n[Model] Build Network Model...")
 
         # =============================================
         #  FCRN (Fully Convolutional Residual Network)
@@ -135,10 +135,10 @@ class Model(object):
                 self.train.tf_loss += loss.calculate_l2norm()
 
             if valid_pixels:
-                print("[Network/Loss] Compute: Ignore invalid pixels")
+                print("[Model/Loss] Compute: Ignore invalid pixels")
             else:
-                print("[Network/Loss] Loss: All Pixels")
-            print("[Network/Loss] Loss Function: %s" % self.loss_name)
+                print("[Model/Loss] Loss: All Pixels")
+            print("[Model/Loss] Loss Function: %s" % self.loss_name)
 
     def build_optimizer(self):
         with tf.name_scope("Optimizer"):
@@ -192,7 +192,7 @@ class Model(object):
         total_num_parameters = 0
         for variable in tf.trainable_variables():
             total_num_parameters += np.array(variable.get_shape().as_list()).prod()
-        print("[Network/Model] Number of trainable parameters: {}".format(total_num_parameters))
+        print("[Model] Number of trainable parameters: {}".format(total_num_parameters))
 
     def collect_summaries(self, graph):
         with tf.name_scope("Summaries"):
@@ -207,7 +207,7 @@ class Model(object):
     @staticmethod
     def save_trained_model(save_path, session, saver, model_name):
         """Creates saver obj which backups all the variables."""
-        print("[Network/Training] List of Saved Variables:")
+        print("[Train] List of saved variables:")
         for i in tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES):
             print(i)  # i.name if you want just a name
 

@@ -138,7 +138,7 @@ class Train:
         if args.show_train_progress:
             self.plot = Plot(args.mode, title='Train Predictions')
 
-        print("\n[Network/Train] Training Tensors created.")
+        print("\n[Train] Training tensors created.")
         # print(tf_batch_image_resized)
         # print(tf_batch_image_resized_uint8)
         # print(tf_batch_depth_resized)

@@ -70,7 +70,7 @@ def argument_handler():
     # ========= #
     parser.add_argument('--eval_tool', type=str,
                         help="Selects the evaluation tool for computing metrics: 'monodepth' or 'kitti_depth'",
-                        default='')
+                        default=None)
 
     parser.add_argument('--test_split', type=str,
                         help="Selects the desired test split for State-of-art evaluation: 'kitti_stereo', 'eigen', 'eigen_continuous', etc",
