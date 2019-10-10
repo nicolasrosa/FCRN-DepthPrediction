@@ -308,8 +308,6 @@ def test():
         # ==============
         #  Testing Loop
         # ==============
-        pred_list, gt_list = [], []
-
         if args.debug:
             num_test_images = 5  # Only for testing!
 
@@ -317,7 +315,9 @@ def test():
         if args.show_test_results:
             test_plot_obj = Plot(args.mode, title='Test Predictions')
 
-        print("\n[Test] Generating Predictions...")
+        print("[Test] Generating Predictions...")
+        pred_list, gt_list = [], []
+
         timer = -time.time()
         for i in tqdm(range(num_test_images)):
             timer2 = -time.time()
@@ -356,9 +356,7 @@ def test():
                 imsave_as_uint16_png(settings.output_tmp_pred_dir + 'pred' + str(i) + '.png', pred_up[0])
                 imsave_as_uint16_png(settings.output_tmp_gt_dir + 'gt' + str(i) + '.png', depth)
 
-            # Prints Testing Progress
             timer2 += time.time()
-            # print('step: %d/%d | t: %f | size(pred_list+gt_list): %d' % (i + 1, num_test_images, timer2, sys.getsizeof(pred_list)+sys.getsizeof(gt_list)))
 
             # Show Results
             if args.show_test_results:
@@ -377,7 +375,7 @@ def test():
 
         # Testing Finished.
         timer += time.time()
-        print("[Test] Testing FINISHED! Time elapsed: {} s\n".format(timer))
+        print("Time elapsed: {} s\n".format(timer))
 
         # =========
         #  Results
@@ -385,7 +383,7 @@ def test():
         # Calculates Metrics
         if args.eval_tool:
             if data.test_depth_filenames:
-                print("[Test] Calculating Metrics based on Test Predictions...")
+                print("[Test/Metrics] Calculating Metrics based on Test Predictions...")
 
                 print('args.test_split:', args.test_split)
                 print('args.test_file_path:', args.test_file_path)
@@ -400,9 +398,9 @@ def test():
                     metrics.evaluation_tool_kitti_depth(num_test_images)
             else:
                 print(
-                    "[Test] It's not possible to calculate metrics. There are no corresponding labels for generated predictions!")
+                    "[Test/Metrics] It's not possible to calculate metrics. There are no corresponding labels for generated predictions!")
         else:
-            print("[Test] Metrics calculation was not requested!")
+            print("[Test/Metrics] Metrics calculation wasn't requested!")
 
 
 # ========= #

@@ -24,7 +24,7 @@ def generate_depth_maps_kitti_split(pred_array, args_gt_path):
     # The FCRN predicts meters instead of disparities, so it's not necessary to convert disps to depth!!!
     gt_disparities = load_gt_disp_kitti(args_gt_path)
 
-    print('\n[Metrics] Generating depth maps...')
+    print('\n[Test/Metrics] Generating depth maps...')
     gt_depths = convert_gt_disps_to_depths_kitti(gt_disparities)
 
     for t_id in tqdm(range(num_test_images)):
@@ -72,7 +72,7 @@ def generate_depth_maps_eigen_split(pred_array, args_gt_path):
     gt_files, gt_calib, im_sizes, im_files, cams = read_file_data(test_files, args_gt_path)
 
     gt_depths = []
-    print('\n[Metrics] Generating depth maps...')
+    print('\n[Test/Metrics] Generating depth maps...')
 
     for t_id in tqdm(range(num_test_images)):
         try:
@@ -119,7 +119,7 @@ def generate_depth_maps_eigen_continuous_split(pred_array, args_gt_path):
     gt_depths = []
     gt_depths_continuous = []
     invalid_idx = []
-    print('\n[Metrics] Generating depth maps...')
+    print('\n[Test/Metrics] Generating depth maps...')
 
     for t_id in tqdm(range(num_test_images)):
         camera_id = cams[t_id]  # 2 is left, 3 is right
@@ -265,7 +265,7 @@ def evaluation_tool_monodepth(pred_depths, gt_depths):
     a2 = np.zeros(num_test_images, np.float32)
     a3 = np.zeros(num_test_images, np.float32)
 
-    print('[Metrics] Computing metrics...')
+    print('[Test/Metrics] Computing metrics...')
     for i in tqdm(range(num_test_images)):
         try:
             gt_depth = gt_depths[i]
