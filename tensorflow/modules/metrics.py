@@ -339,13 +339,6 @@ def evaluation_tool_monodepth(pred_depths, gt_depths):
     # Save results on .csv file
     save_metrics_results_csv(metrics)
 
-    # Display Results
-    print()
-    print("# ----------------- #")
-    print("#  Metrics Results  #")
-    print("# ----------------- #")
-    print(metrics)
-
 
 def evaluation_tool_kitti_depth(num_test_images):
     import subprocess
