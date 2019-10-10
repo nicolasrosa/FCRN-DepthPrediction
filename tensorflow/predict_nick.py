@@ -291,9 +291,6 @@ def test():
     #  Network Testing Model - Importing Graph
     # -----------------------------------------
     # Loads the dataset and restores a specified trained model.
-    if args.dataset == '':
-       args.dataset = 'kitti_depth'
-
     data = Dataloader()
 
     # Searches dataset images filenames

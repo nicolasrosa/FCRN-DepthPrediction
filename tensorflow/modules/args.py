@@ -33,7 +33,7 @@ def argument_handler():
 
     parser.add_argument('-s', '--dataset', action='store',
                         help="Selects the dataset: 'apolloscape', 'kitti_depth', 'kitti_discrete', 'kitti_continuous', 'nyudepth', or 'lrmjose'",
-                        default='')
+                        default='kitti_depth')
 
     parser.add_argument('--px', action='store',
                         help="Selects which pixels to optimize: 'all' or 'valid'", default='valid')

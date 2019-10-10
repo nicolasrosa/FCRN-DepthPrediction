@@ -155,7 +155,7 @@ The `--test_split` flag allows you to choose which dataset you want to test on.
 **Command line, when selecting a desired trained model:**
 
 ```shell
-python3 predict_nick.py --machine nicolas -m test --gpu 0 -s kitti_continuous -r output/fcrn/2018-02-26_17-08-45/restore/model.fcrn --eval_tool monodepth --test_split eigen_kitti_depth -u
+python3 predict_nick.py --machine nicolas -m test --gpu 0 -r output/fcrn/2018-02-26_17-08-45/restore/model.fcrn --eval_tool monodepth --test_split eigen_kitti_depth -u
 ```
 
 
@@ -163,7 +163,7 @@ python3 predict_nick.py --machine nicolas -m test --gpu 0 -s kitti_continuous -r
 **Using official evaluation tool from KITTI Depth Prediction Dataset:**
 
 ```shell
-python3 predict_nick.py -m test --gpu 0 -s kitti_continuous --eval_tool kitti_depth --test_split eigen_kitti_depth -u
+python3 predict_nick.py -m test --gpu 0 --eval_tool kitti_depth --test_split eigen_kitti_depth -u
 ```
 
 
@@ -171,7 +171,7 @@ python3 predict_nick.py -m test --gpu 0 -s kitti_continuous --eval_tool kitti_de
 **Using Monodepth's evaluation code:**
 
 ```shell
-python3 predict_nick.py -m test --gpu 0 -s kitti_continuous --eval_tool monodepth --test_split eigen_kitti_depth -u
+python3 predict_nick.py -m test --gpu 0 --eval_tool monodepth --test_split eigen_kitti_depth -u
 ```
 
 
