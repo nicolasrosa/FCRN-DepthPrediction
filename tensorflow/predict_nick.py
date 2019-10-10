@@ -348,8 +348,10 @@ def test():
                 gt_list.append(depth[:, :, 0])
 
             # Saves the predictions and ground truth depth images as uint16 PNG Images
-            if SAVE_TEST_DISPARITIES or args.eval_tool == 'monodepth':
+            if SAVE_TEST_DISPARITIES or args.eval_tool == 'monodepth' or args.eval_tool == 'kitti_depth':
                 # Convert the Predictions Images from float32 to uint16
+
+                # print(data.test_image_filenames[i])
 
                 imsave_as_uint16_png(settings.output_tmp_pred_dir + 'pred' + str(i) + '.png', pred_up[0])
                 imsave_as_uint16_png(settings.output_tmp_gt_dir + 'gt' + str(i) + '.png', depth)

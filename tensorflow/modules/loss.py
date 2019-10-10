@@ -60,7 +60,6 @@ def tf_berhu_loss(tf_y, tf_y_, valid_pixels=True):
 
     # C Constant Calculation
     tf_abs_error = tf.abs(tf_y - tf_y_, name='abs_error')
-    tf_c = tf.multiply(tf.constant(0.2), tf.reduce_max(tf_abs_error))  # Consider All Pixels!
 
     # Mask Out
     if valid_pixels:
@@ -69,6 +68,8 @@ def tf_berhu_loss(tf_y, tf_y_, valid_pixels=True):
 
         # Overwrites the previous tensor, so now considers only the Valid Pixels!
         tf_abs_error = tf.abs(tf_y - tf_y_, name='abs_error')
+
+    tf_c = tf.multiply(tf.constant(0.2), tf.reduce_max(tf_abs_error))  # Consider All Pixels!
 
     # Loss
     tf_berhu_loss = tf.where(tf_abs_error <= tf_c, tf_abs_error,
