@@ -103,23 +103,23 @@ python3 predict_nick.py --machine nicolas -m train --gpu 0 -s kitti_continuous -
 ### TensorBoard
 
 ```shell
-tensorboard --logdir=MEGA/workspace/FCRN-DepthPrediction/tensorflow/output/fcrn/apolloscape
+tensorboard --logdir=MEGA/workspace/FCRN-DepthPrediction/tensorflow/output/models/apolloscape
 ```
 
 ```shell
-tensorboard --logdir=MEGA/workspace/FCRN-DepthPrediction/tensorflow/output/fcrn/kitti_depth
+tensorboard --logdir=MEGA/workspace/FCRN-DepthPrediction/tensorflow/output/models/kitti_depth
 ```
 
 ```shell
-tensorboard --logdir=MEGA/workspace/FCRN-DepthPrediction/tensorflow/output/fcrn/kitti_discrete
+tensorboard --logdir=MEGA/workspace/FCRN-DepthPrediction/tensorflow/output/models/kitti_discrete
 ```
 
 ```shell
-tensorboard --logdir=MEGA/workspace/FCRN-DepthPrediction/tensorflow/output/fcrn/kitti_continuous
+tensorboard --logdir=MEGA/workspace/FCRN-DepthPrediction/tensorflow/output/models/kitti_continuous
 ```
 
 ```shell
-tensorboard --logdir=MEGA/workspace/FCRN-DepthPrediction/tensorflow/output/fcrn/nyudepth
+tensorboard --logdir=MEGA/workspace/FCRN-DepthPrediction/tensorflow/output/models/nyudepth
 ```
 
 
@@ -155,7 +155,7 @@ The `--test_split` flag allows you to choose which dataset you want to test on.
 **Command line, when selecting a desired trained model:**
 
 ```shell
-python3 predict_nick.py --machine nicolas -m test --gpu 0 -r output/fcrn/2018-02-26_17-08-45/restore/model.fcrn --eval_tool monodepth --test_split eigen_kitti_depth -u
+python3 predict_nick.py --machine nicolas -m test --gpu 0 -r output/models/2018-02-26_17-08-45/restore/model.fcrn --eval_tool monodepth --test_split eigen_kitti_depth -u
 ```
 
 
@@ -200,7 +200,7 @@ python3 predict_nick.py -m pred --gpu 0 -r ../models/NYU_FCRN-checkpoint/NYU_FCR
 ```
 
 ```shell
-   python3 predict_cv.py -r output/fcrn/kitti_continuous/all_px/berhu/2018-06-29_17-59-58/restore/model.fcrn ../misc/outdoor_dubai_city.mp4
+   python3 predict_cv.py -r output/models/kitti_continuous/all_px/berhu/2018-06-29_17-59-58/restore/model.fcrn ../misc/outdoor_dubai_city.mp4
 ```
 
    

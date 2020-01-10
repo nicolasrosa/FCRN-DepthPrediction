@@ -31,7 +31,7 @@ def argumentHandler():
     # parser.add_argument('__log', type=str, help="ROS Node Log path", default='')
     parser.add_argument('--gpu', type=str, help="Select which gpu to run the code", default='0')
     parser.add_argument('-r', '--model_path', help='Converted parameters for the model',
-                        default="/home/nicolas/MEGA/workspace/FCRN-DepthPrediction/tensorflow/output/fcrn/lrmjose/all_px/berhu/2018-11-19_10-50-26/restore/model.fcrn")
+                        default="/home/nicolas/MEGA/workspace/FCRN-DepthPrediction/tensorflow/output/models/lrmjose/all_px/berhu/2018-11-19_10-50-26/restore/model.fcrn")
     parser.add_argument('-i', '--video_path', help='Directory of images to predict')
     return parser.parse_args()
 
