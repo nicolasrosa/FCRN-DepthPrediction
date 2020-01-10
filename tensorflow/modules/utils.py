@@ -66,7 +66,7 @@ class Settings:
 # ===========
 def detect_available_models():
     if args.model_path == '':
-        found_models = glob.glob(settings.output_dir + "fcrn/*/*/*/*/restore/*.meta")
+        found_models = glob.glob(settings.output_dir + "models/*/*/*/*/restore/*.meta")
         found_models.sort()
 
         for i, model in enumerate(found_models):
