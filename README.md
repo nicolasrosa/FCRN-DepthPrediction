@@ -23,7 +23,7 @@ If you find our work useful in your research please consider citing our paper:
 
 **DISCLAIMER**
 
-This repository was originally forked from [iro-cp/FCRN-DepthPrediction](https://github.com/iro-cp/FCRN-DepthPrediction). We developed all the code in Tersonflow for the training step, alongside several modifications for allowing the code to handle different datasets like `ApolloScape`, `KITTI`, `NYUDepth`, and another features which were not available on the original repository. 
+This repository was originally forked from [iro-cp/FCRN-DepthPrediction](https://github.com/iro-cp/FCRN-DepthPrediction). We developed all the code in Tensorflow for the training step, alongside several modifications for allowing the code to handle different datasets like `ApolloScape`, `KITTI`, `NYUDepth`, and another features which were not available on the original repository. 
 
 We used and preserved the network proposed by Laina et al. (2016) presented in the "Deeper Depth Prediction with Fully Convolutional Residual Networks (FCRN)" article. **All rights reserved to them**.
 
